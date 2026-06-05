@@ -1,19 +1,19 @@
-/*
-Author: Kos Stefan; Kilic Safak
 
-Filename: cntr_top.vhd
+--Author: Kos Stefan; Kilic Safak
 
-Date of Creation: 04.06.026
+--Filename: cntr_top.vhd
 
-Date of Latest Version: 04.06.2026
+--Date of Creation: 04.06.026
 
-Design Unit: Counter Top
+--Date of Latest Version: 04.06.2026
 
-Description: The top-level entity cntr_top contains of two sub-units: io_ctrl and cntr.
-	Sub-unit "IO Control" io_ctrl handles the I/O ports (with exception of the clock signal and the reset),
-	and the second sub-unit cntr contains the implementation of the octal counter. The 7-segment decoder/multiplexer
-	(used to control and multiplex the four 7-segment digits) is located in the io_ctrl.
-*/
+--Design Unit: Counter Top
+
+--Description: The top-level entity cntr_top contains of two sub-units: io_ctrl and cntr.
+--	Sub-unit "IO Control" io_ctrl handles the I/O ports (with exception of the clock signal and the reset),
+--	and the second sub-unit cntr contains the implementation of the octal counter. The 7-segment decoder/multiplexer
+--	(used to control and multiplex the four 7-segment digits) is located in the io_ctrl.
+
 
 library ieee;
 use ieee.std_logic_1164.all;
@@ -69,7 +69,7 @@ architecture rtl of cntr_top is
 		cntr0_o : out std_logic_vector(3 downto 0);	-- Digit 0 (from FPGA internal logic) LS
 		cntr1_o : out std_logic_vector(3 downto 0);	-- Digit 1 (from FPGA internal logic)
 		cntr2_o : out std_logic_vector(3 downto 0);	-- Digit 2 (from FPGA internal logic)
-		cntr3_o : out std_logic_vector(3 downto 0);	-- Digit 3 (from FPGA internal logic) MS
+		cntr3_o : out std_logic_vector(3 downto 0)	-- Digit 3 (from FPGA internal logic) MS
 	);
 	end component cntr;
 	
