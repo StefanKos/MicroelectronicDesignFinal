@@ -23,10 +23,10 @@ use ieee.numeric_std.all;
 
 entity cntr is
 	port(
-		clk_i : in std_logic;						-- System Clock (100MHz)
+		clk_i : in std_logic;							-- System Clock (100MHz)
 		reset_i : in std_logic;						-- Asynchronous high active reset
 		
-		cntrup_i : in std_logic;					-- Counts up if signal is '1'
+		cntrup_i : in std_logic;						-- Counts up if signal is '1'
 		cntrdown_i : in std_logic;					-- Counts down if signal is '1'
 		cntrclear_i : in std_logic;					-- Sets counter to 0x0 is signal is '1'
 		cntrhold_i : in std_logic;					-- Holds count value if signal is '1'
@@ -41,6 +41,10 @@ end entity cntr;
 architecture rtl of cntr is
 	
 	constant CLK_DIV_MAX : unsigned(27 downto 0) := to_unsigned(199_999_999, 28);
+	
+	-- Für die Testbench
+	-- constant CLK_DIV_MAX : unsigned(27 downto 0) := to_unsigned(199, 28);
+	
 	
 	signal div_cnt : unsigned(27 downto 0);
 	signal en_0_5hz : std_logic;

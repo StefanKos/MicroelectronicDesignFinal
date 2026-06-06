@@ -114,14 +114,6 @@ begin
         reset_i <= '0';
         wait for 50 ns;
 
-	 -----------------------------------------------------------------------
-        -- Test case 2: Count up
-        -----------------------------------------------------------------------
-        cntrup_i <= '1';
-        cntrdown_i <= '0';
-        wait for 5 sec; -- placeholder, increase for real 0.5 Hz operation
-        cntrup_i <= '0';
-		
         -----------------------------------------------------------------------
         -- Test case 1: Hold mode
         -----------------------------------------------------------------------
@@ -129,6 +121,14 @@ begin
         wait for 5 ms;  -- placeholder, increase if full-speed divider is used
         cntrhold_i <= '0';
 
+	 -----------------------------------------------------------------------
+        -- Test case 2: Count up
+        -----------------------------------------------------------------------
+        cntrup_i <= '1';
+        cntrdown_i <= '0';
+        wait for 50 ns; -- placeholder, increase for real 0.5 Hz operation
+        cntrup_i <= '0';
+		
 
         -----------------------------------------------------------------------
         -- Test case 3: Hold after count up
