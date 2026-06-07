@@ -40,10 +40,11 @@ end entity cntr;
 
 architecture rtl of cntr is
 	
-	constant CLK_DIV_MAX : unsigned(27 downto 0) := to_unsigned(199_999_999, 28);
+	-- Frequenz Teiler 1kHz auf 100MHz -> 100_000
+	--constant CLK_DIV_MAX : unsigned(27 downto 0) := to_unsigned(199_999_999, 28);
 	
 	-- Für die Testbench
-	-- constant CLK_DIV_MAX : unsigned(27 downto 0) := to_unsigned(199, 28);
+	constant CLK_DIV_MAX : unsigned(27 downto 0) := to_unsigned(199, 28);
 	
 	
 	signal div_cnt : unsigned(27 downto 0);

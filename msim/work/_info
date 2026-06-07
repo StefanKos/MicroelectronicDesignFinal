@@ -9,7 +9,7 @@ z2
 cModel Technology
 Z0 dD:/FHTW/MircoElec/CounterFPGA/msim
 Ecntr
-Z1 w1780774871
+Z1 w1780846136
 Z2 DPx4 ieee 11 numeric_std 0 22 :ASDNFgHXf_ih3J@9F3Ze1
 Z3 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
 Z4 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
@@ -22,9 +22,9 @@ V3Kb]F0X;;gfkXe;;f2EeF1
 !s100 J_6h:4=kfi:SBh8G1UZ8T2
 Z7 OV;C;10.5b;63
 32
-Z8 !s110 1780775046
+Z8 !s110 1780847129
 !i10b 1
-Z9 !s108 1780775046.000000
+Z9 !s108 1780847129.000000
 Z10 !s90 -reportprogress|300|../vhd/cntr.vhd|
 Z11 !s107 ../vhd/cntr.vhd|
 !i113 1
@@ -34,10 +34,10 @@ R2
 R3
 R4
 DEx4 work 4 cntr 0 22 3Kb]F0X;;gfkXe;;f2EeF1
-l53
+l55
 L41
-Ve2z1hZclY;79DI>=U7ARK3
-!s100 ?>D0zkmHemV[WBczT4A_93
+VC5ZCk^3RUdZ?IP_TX[F^X0
+!s100 `cFK6KfUfg9?zKikO84VP0
 R7
 32
 R8
@@ -85,7 +85,7 @@ R17
 !i113 1
 R12
 Eio_ctrl
-Z18 w1780690187
+Z18 w1780847125
 R2
 R3
 R4
@@ -98,11 +98,11 @@ V7IX3WaaG]H5HXc:n`3EOM2
 !s100 1m<6hI^^SW2S8i8[j5_D01
 R7
 32
-Z21 !s110 1780775045
+R8
 !i10b 1
-Z22 !s108 1780775045.000000
-Z23 !s90 -reportprogress|300|../vhd/io_ctrl.vhd|
-Z24 !s107 ../vhd/io_ctrl.vhd|
+R9
+Z21 !s90 -reportprogress|300|../vhd/io_ctrl.vhd|
+Z22 !s107 ../vhd/io_ctrl.vhd|
 !i113 1
 R12
 Artl
@@ -110,27 +110,27 @@ R2
 R3
 R4
 DEx4 work 7 io_ctrl 0 22 7IX3WaaG]H5HXc:n`3EOM2
-l59
+l62
 L44
-Vl@3OIEGZ=5CHEPa9Mf4]>1
-!s100 LAN6U]PjEaWB[[7ZJL2cd2
+VI]^QWNSScQIkFZNL^9DdK3
+!s100 OnA19Q>TS0iG=@ia1?_aI2
 R7
 32
-R21
+R8
 !i10b 1
+R9
+R21
 R22
-R23
-R24
 !i113 1
 R12
 Etb_cntr
-Z25 w1780775000
+Z23 w1780846907
 R2
 R3
 R4
 R0
-Z26 8../tb/tb_cntr.vhd
-Z27 F../tb/tb_cntr.vhd
+Z24 8../tb/tb_cntr.vhd
+Z25 F../tb/tb_cntr.vhd
 l0
 L24
 VUK0R^^o1eN@5TSVjjaJL03
@@ -140,8 +140,8 @@ R7
 R8
 !i10b 1
 R9
-Z28 !s90 -reportprogress|300|../tb/tb_cntr.vhd|
-Z29 !s107 ../tb/tb_cntr.vhd|
+Z26 !s90 -reportprogress|300|../tb/tb_cntr.vhd|
+Z27 !s107 ../tb/tb_cntr.vhd|
 !i113 1
 R12
 Asim
@@ -149,27 +149,27 @@ R2
 R3
 R4
 DEx4 work 7 tb_cntr 0 22 UK0R^^o1eN@5TSVjjaJL03
-l67
+l77
 L27
-VdYMzI10kDV=h92UXliDAW3
-!s100 k>f:iiME4R8<Z6c:LJ^k^2
+V<K]M`k0k>O>UFQTc==[:k0
+!s100 HJC;CcYN4J]@bjTOSh]IY1
 R7
 32
 R8
 !i10b 1
 R9
-R28
-R29
+R26
+R27
 !i113 1
 R12
 Etb_io_ctrl
-Z30 w1780688994
+Z28 w1780846679
 R2
 R3
 R4
 R0
-Z31 8../tb/tb_io_ctrl.vhd
-Z32 F../tb/tb_io_ctrl.vhd
+Z29 8../tb/tb_io_ctrl.vhd
+Z30 F../tb/tb_io_ctrl.vhd
 l0
 L23
 V`4?jU0@n8NdUiTZTnKZAA3
@@ -179,8 +179,8 @@ R7
 R8
 !i10b 1
 R9
-Z33 !s90 -reportprogress|300|../tb/tb_io_ctrl.vhd|
-Z34 !s107 ../tb/tb_io_ctrl.vhd|
+Z31 !s90 -reportprogress|300|../tb/tb_io_ctrl.vhd|
+Z32 !s107 ../tb/tb_io_ctrl.vhd|
 !i113 1
 R12
 Asim
@@ -188,16 +188,16 @@ R2
 R3
 R4
 DEx4 work 10 tb_io_ctrl 0 22 `4?jU0@n8NdUiTZTnKZAA3
-l80
+l90
 L26
-V_7dQSYl^>^BVG6?E=m`@U3
-!s100 g@oGTQQC_MoTkzJ:=J;;51
+VPZK9JCZXJQ24`NK`2fg9L3
+!s100 iCE=Ez^[AWiI6Kj^QA8WD0
 R7
 32
 R8
 !i10b 1
 R9
-R33
-R34
+R31
+R32
 !i113 1
 R12

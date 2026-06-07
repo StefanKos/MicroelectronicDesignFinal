@@ -10,4 +10,4 @@ vsim -t ns -lib work work.tb_cntr
 view *
 do cntr_wave.do      ;# define signals to display in Wave window
 
-run 10 sec
+run 120 sec

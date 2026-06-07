@@ -26,25 +26,35 @@ end entity tb_cntr;
 
 architecture sim of tb_cntr is
 
-    ---------------------------------------------------------------------------
-    -- Component declaration
-    ---------------------------------------------------------------------------
-    component cntr
-        port(
-            clk_i       : in  std_logic;
-            reset_i     : in  std_logic;
+	---------------------------------------------------------------------------
+	-- Wait Timing Solution
+	---------------------------------------------------------------------------
+procedure wait_n_clocks(signal clk : in std_logic; n : in natural) is
+begin
+	for i in 1 to n loop
+		wait until rising_edge(clk);
+	end loop;
+end procedure;
 
-            cntrup_i    : in  std_logic;
-            cntrdown_i  : in  std_logic;
-            cntrclear_i : in  std_logic;
-            cntrhold_i  : in  std_logic;
+	---------------------------------------------------------------------------
+	-- Component declaration
+	---------------------------------------------------------------------------
+component cntr
+	port(
+		clk_i       : in  std_logic;
+		reset_i     : in  std_logic;
 
-            cntr0_o     : out std_logic_vector(3 downto 0);
-            cntr1_o     : out std_logic_vector(3 downto 0);
-            cntr2_o     : out std_logic_vector(3 downto 0);
-            cntr3_o     : out std_logic_vector(3 downto 0)
-        );
-    end component;
+		cntrup_i    : in  std_logic;
+		cntrdown_i  : in  std_logic;
+		cntrclear_i : in  std_logic;
+		cntrhold_i  : in  std_logic;
+
+		cntr0_o     : out std_logic_vector(3 downto 0);
+		cntr1_o     : out std_logic_vector(3 downto 0);
+		cntr2_o     : out std_logic_vector(3 downto 0);
+		cntr3_o     : out std_logic_vector(3 downto 0)
+       );
+end component;
 
     ---------------------------------------------------------------------------
     -- Testbench signals
@@ -101,71 +111,70 @@ begin
     ---------------------------------------------------------------------------
     p_stim : process
     begin
-        -----------------------------------------------------------------------
-        -- Initial reset
-        -----------------------------------------------------------------------
-        reset_i <= '1';
-        cntrup_i <= '0';
-        cntrdown_i <= '0';
-        cntrclear_i <= '0';
-        cntrhold_i <= '0';
-        wait for 50 ns;
+	-----------------------------------------------------------------------
+	-- Initial reset
+	-----------------------------------------------------------------------
+	reset_i <= '1';
+	cntrup_i <= '0';
+	cntrdown_i <= '0';
+	cntrclear_i <= '0';
+	cntrhold_i <= '0';
+	wait_n_clocks(clk_i, 5); 
 
-        reset_i <= '0';
-        wait for 50 ns;
+	reset_i <= '0';
+	wait_n_clocks(clk_i, 5); 
 
-        -----------------------------------------------------------------------
-        -- Test case 1: Hold mode
-        -----------------------------------------------------------------------
-        cntrhold_i <= '1';
-        wait for 5 ms;  -- placeholder, increase if full-speed divider is used
-        cntrhold_i <= '0';
+	-----------------------------------------------------------------------
+	-- Test case 1: Hold mode
+	-----------------------------------------------------------------------
+	cntrhold_i <= '1';
+       wait_n_clocks(clk_i, 500); 
+	cntrhold_i <= '0';
 
-	 -----------------------------------------------------------------------
-        -- Test case 2: Count up
-        -----------------------------------------------------------------------
-        cntrup_i <= '1';
-        cntrdown_i <= '0';
-        wait for 50 ns; -- placeholder, increase for real 0.5 Hz operation
-        cntrup_i <= '0';
-		
+	-----------------------------------------------------------------------
+	-- Test case 2: Count up
+	-----------------------------------------------------------------------
+	cntrup_i <= '1';
+	cntrdown_i <= '0';
+	wait_n_clocks(clk_i, 20_000); 
+	cntrup_i <= '0';
+	
+	-----------------------------------------------------------------------
+	-- Test case 3: Hold after count up
+	-----------------------------------------------------------------------
+	cntrhold_i <= '1';
+	wait_n_clocks(clk_i, 500); 
+	cntrhold_i <= '0';
 
-        -----------------------------------------------------------------------
-        -- Test case 3: Hold after count up
-        -----------------------------------------------------------------------
-        cntrhold_i <= '1';
-        wait for 5 ms;
-        cntrhold_i <= '0';
+	-----------------------------------------------------------------------
+	-- Test case 4: Count down
+	-----------------------------------------------------------------------
+	cntrup_i <= '0';
+	cntrdown_i <= '1';
+	wait_n_clocks(clk_i, 20_000); 
+	cntrdown_i <= '0';
 
-        -----------------------------------------------------------------------
-        -- Test case 4: Count down
-        -----------------------------------------------------------------------
-        cntrup_i <= '0';
-        cntrdown_i <= '1';
-        wait for 20 ms; -- placeholder, increase for real 0.5 Hz operation
-        cntrdown_i <= '0';
+	-----------------------------------------------------------------------
+	-- Test case 5: Synchronous clear
+	-----------------------------------------------------------------------
+	cntrclear_i <= '1';
+	wait_n_clocks(clk_i, 2); 
+	cntrclear_i <= '0';
+	wait_n_clocks(clk_i, 1_000); 
 
-        -----------------------------------------------------------------------
-        -- Test case 5: Synchronous clear
-        -----------------------------------------------------------------------
-        cntrclear_i <= '1';
-        wait for 20 ns;
-        cntrclear_i <= '0';
-        wait for 1 ms;
+	-----------------------------------------------------------------------
+	-- Test case 6: Illegal input combination Up=1, Down=1
+	-----------------------------------------------------------------------
+	cntrup_i <= '1';
+	cntrdown_i <= '1';
+	wait_n_clocks(clk_i, 5_000); 
+	cntrup_i <= '0';
+	cntrdown_i <= '0';
 
-        -----------------------------------------------------------------------
-        -- Test case 6: Illegal input combination Up=1, Down=1
-        -----------------------------------------------------------------------
-        cntrup_i <= '1';
-        cntrdown_i <= '1';
-        wait for 5 ms;
-        cntrup_i <= '0';
-        cntrdown_i <= '0';
-
-        -----------------------------------------------------------------------
-        -- End of simulation
-        -----------------------------------------------------------------------
-        wait;
-    end process p_stim;
+	-----------------------------------------------------------------------
+	-- End of simulation
+	-----------------------------------------------------------------------
+	assert false report "tb_cntr SIM complete"severity failure;
+end process p_stim;
 
 end architecture sim;
