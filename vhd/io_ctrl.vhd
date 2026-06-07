@@ -44,7 +44,10 @@ end entity io_ctrl;
 architecture rtl of io_ctrl is
 
 	-- Frequenz Teiler 1kHz auf 100MHz -> 100_000
-	constant CLK_REFRESH_MAX : unsigned(16 downto 0) := to_unsigned(99_999, 17);
+	-- constant CLK_DIV_MAX : unsigned(16 downto 0) := to_unsigned(99_999, 17);
+
+	-- Für die Testbench
+	constant CLK_DIV_MAX : unsigned(27 downto 0) := to_unsigned(199, 28);
 
 	signal swsync_0, swsync_1 : std_logic_vector(15 downto 0);
 	signal pbsync_0, pbsync_1 : std_logic_vector(3 downto 0);
@@ -87,9 +90,9 @@ begin
 			refresh_cnt <= (others => '0');
 			refresh_en <= '0';
 			digit_sel <= (others => '0');
-		
+			
 		elsif rising_edge(clk_i) then
-			if refresh_cnt = CLK_REFRESH_MAX then
+			if refresh_cnt = CLK_DIV_MAX then
 				refresh_cnt <= (others => '0');
 				refresh_en <= '1';
 			

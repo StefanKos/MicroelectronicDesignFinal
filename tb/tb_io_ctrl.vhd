@@ -25,159 +25,169 @@ end entity tb_io_ctrl;
 
 architecture sim of tb_io_ctrl is
 
-    ---------------------------------------------------------------------------
-    -- Component declaration
-    ---------------------------------------------------------------------------
-    component io_ctrl
-        port(
-            clk_i     : in  std_logic;
-            reset_i   : in  std_logic;
+	---------------------------------------------------------------------------
+	-- Component declaration
+	---------------------------------------------------------------------------
+component io_ctrl
+       port(
+		clk_i     : in  std_logic;
+		reset_i   : in  std_logic;
 
-            cntr0_i   : in  std_logic_vector(3 downto 0);
-            cntr1_i   : in  std_logic_vector(3 downto 0);
-            cntr2_i   : in  std_logic_vector(3 downto 0);
-            cntr3_i   : in  std_logic_vector(3 downto 0);
+		cntr0_i   : in  std_logic_vector(3 downto 0);
+		cntr1_i   : in  std_logic_vector(3 downto 0);
+		cntr2_i   : in  std_logic_vector(3 downto 0);
+		cntr3_i   : in  std_logic_vector(3 downto 0);
 
-            led_i     : in  std_logic_vector(15 downto 0);
-            sw_i      : in  std_logic_vector(15 downto 0);
-            pb_i      : in  std_logic_vector(3 downto 0);
+		led_i     : in  std_logic_vector(15 downto 0);
+		sw_i      : in  std_logic_vector(15 downto 0);
+		pb_i      : in  std_logic_vector(3 downto 0);
 
-            ss_o      : out std_logic_vector(7 downto 0);
-            ss_sel_o  : out std_logic_vector(3 downto 0);
+		ss_o      : out std_logic_vector(7 downto 0);
+		ss_sel_o  : out std_logic_vector(3 downto 0);
 
-            swsync_o  : out std_logic_vector(15 downto 0);
-            pbsync_o  : out std_logic_vector(3 downto 0);
+		swsync_o  : out std_logic_vector(15 downto 0);
+		pbsync_o  : out std_logic_vector(3 downto 0);
 
-            led_o     : out std_logic_vector(15 downto 0)
-        );
-    end component;
+		led_o     : out std_logic_vector(15 downto 0)
+       );
+end component;
 
-    ---------------------------------------------------------------------------
-    -- Testbench signals
-    ---------------------------------------------------------------------------
-    signal clk_i     : std_logic := '0';
-    signal reset_i   : std_logic := '0';
+	---------------------------------------------------------------------------
+	-- Wait Timing Solution
+	---------------------------------------------------------------------------
+procedure wait_n_clocks(signal clk : in std_logic; n : in natural) is
+begin
+	for i in 1 to n loop
+		wait until rising_edge(clk);
+	end loop;
+end procedure;
 
-    signal cntr0_i   : std_logic_vector(3 downto 0) := (others => '0');
-    signal cntr1_i   : std_logic_vector(3 downto 0) := (others => '0');
-    signal cntr2_i   : std_logic_vector(3 downto 0) := (others => '0');
-    signal cntr3_i   : std_logic_vector(3 downto 0) := (others => '0');
+	---------------------------------------------------------------------------
+	-- Testbench signals
+	---------------------------------------------------------------------------
+	signal clk_i     : std_logic := '0';
+	signal reset_i   : std_logic := '0';
 
-    signal led_i     : std_logic_vector(15 downto 0) := (others => '0');
-    signal sw_i      : std_logic_vector(15 downto 0) := (others => '0');
-    signal pb_i      : std_logic_vector(3 downto 0) := (others => '0');
+	signal cntr0_i   : std_logic_vector(3 downto 0) := (others => '0');
+	signal cntr1_i   : std_logic_vector(3 downto 0) := (others => '0');
+	signal cntr2_i   : std_logic_vector(3 downto 0) := (others => '0');
+	signal cntr3_i   : std_logic_vector(3 downto 0) := (others => '0');
 
-    signal ss_o      : std_logic_vector(7 downto 0);
-    signal ss_sel_o  : std_logic_vector(3 downto 0);
+	signal led_i     : std_logic_vector(15 downto 0) := (others => '0');
+	signal sw_i      : std_logic_vector(15 downto 0) := (others => '0');
+	signal pb_i      : std_logic_vector(3 downto 0) := (others => '0');
 
-    signal swsync_o  : std_logic_vector(15 downto 0);
-    signal pbsync_o  : std_logic_vector(3 downto 0);
+	signal ss_o      : std_logic_vector(7 downto 0);
+	signal ss_sel_o  : std_logic_vector(3 downto 0);
 
-    signal led_o     : std_logic_vector(15 downto 0);
+	signal swsync_o  : std_logic_vector(15 downto 0);
+	signal pbsync_o  : std_logic_vector(3 downto 0);
 
-    constant CLK_PERIOD : time := 10 ns; -- 100 MHz
+	signal led_o     : std_logic_vector(15 downto 0);
+
+	constant CLK_PERIOD : time := 10 ns; -- 100 MHz
 
 begin
 
-    ---------------------------------------------------------------------------
-    -- DUT
-    ---------------------------------------------------------------------------
-    uut : io_ctrl
-        port map(
-            clk_i     => clk_i,
-            reset_i   => reset_i,
-            cntr0_i   => cntr0_i,
-            cntr1_i   => cntr1_i,
-            cntr2_i   => cntr2_i,
-            cntr3_i   => cntr3_i,
-            led_i     => led_i,
-            sw_i      => sw_i,
-            pb_i      => pb_i,
-            ss_o      => ss_o,
-            ss_sel_o  => ss_sel_o,
-            swsync_o  => swsync_o,
-            pbsync_o  => pbsync_o,
-            led_o     => led_o
-        );
+	---------------------------------------------------------------------------
+	-- DUT
+	---------------------------------------------------------------------------
+uut : io_ctrl
+	port map(
+		clk_i     => clk_i,
+		reset_i   => reset_i,
+		cntr0_i   => cntr0_i,
+		cntr1_i   => cntr1_i,
+		cntr2_i   => cntr2_i,
+		cntr3_i   => cntr3_i,
+		led_i     => led_i,
+		sw_i      => sw_i,
+		pb_i      => pb_i,
+		ss_o      => ss_o,
+		ss_sel_o  => ss_sel_o,
+		swsync_o  => swsync_o,
+		pbsync_o  => pbsync_o,
+		led_o     => led_o
+	);
 
-    ---------------------------------------------------------------------------
-    -- Clock generation
-    ---------------------------------------------------------------------------
-    p_clk : process
-    begin
-        while true loop
-            clk_i <= '0';
-            wait for CLK_PERIOD / 2;
-            clk_i <= '1';
-            wait for CLK_PERIOD / 2;
-        end loop;
-    end process p_clk;
+	---------------------------------------------------------------------------
+	-- Clock generation
+	---------------------------------------------------------------------------
+	p_clk : process
+	begin
+		while true loop
+			clk_i <= '0';
+			wait for CLK_PERIOD / 2;
+			clk_i <= '1';
+			wait for CLK_PERIOD / 2;
+		end loop;
+	end process p_clk;
 
-    ---------------------------------------------------------------------------
-    -- Stimulus process
-    ---------------------------------------------------------------------------
-    p_stim : process
-    begin
-        -----------------------------------------------------------------------
-        -- Initial reset
-        -----------------------------------------------------------------------
-        reset_i <= '1';
-        wait for 50 ns;
-        reset_i <= '0';
-        wait for 50 ns;
+	---------------------------------------------------------------------------
+	-- Stimulus process
+	---------------------------------------------------------------------------
+	p_stim : process
+	begin
+	-----------------------------------------------------------------------
+	-- Initial reset
+	-----------------------------------------------------------------------
+		reset_i <= '1';
+		wait_n_clocks(clk_i, 10);
+		reset_i <= '0';
+		wait_n_clocks(clk_i, 10);
 
-        -----------------------------------------------------------------------
-        -- Test case 1: Static digit values for 7-segment display
-        -----------------------------------------------------------------------
-        cntr0_i <= "0001"; -- 1
-        cntr1_i <= "0010"; -- 2
-        cntr2_i <= "0011"; -- 3
-        cntr3_i <= "0100"; -- 4
-        wait for 5 ms;     -- observe multiplexing
+	-----------------------------------------------------------------------
+	-- Test case 1: Static digit values for 7-segment display
+	-----------------------------------------------------------------------
+		cntr0_i <= "0001"; -- 1
+		cntr1_i <= "0010"; -- 2
+		cntr2_i <= "0011"; -- 3
+		cntr3_i <= "0100"; -- 4
+		wait_n_clocks(clk_i, 50);     -- observe multiplexing
 
-        -----------------------------------------------------------------------
-        -- Test case 2: Change digit values
-        -----------------------------------------------------------------------
-        cntr0_i <= "0101"; -- 5
-        cntr1_i <= "0110"; -- 6
-        cntr2_i <= "0111"; -- 7
-        cntr3_i <= "0000"; -- 0
-        wait for 5 ms;
+	-----------------------------------------------------------------------
+	-- Test case 2: Change digit values
+	-----------------------------------------------------------------------
+		cntr0_i <= "0101"; -- 5
+		cntr1_i <= "0110"; -- 6
+		cntr2_i <= "0111"; -- 7
+		cntr3_i <= "0000"; -- 0
+		wait_n_clocks(clk_i, 5_000);
 
-        -----------------------------------------------------------------------
-        -- Test case 3: Switch synchronization
-        -----------------------------------------------------------------------
-        sw_i(3 downto 0) <= "1010";
-        wait for 100 ns;
-        sw_i(3 downto 0) <= "0101";
-        wait for 100 ns;
-        sw_i(3 downto 0) <= "1111";
-        wait for 2 ms;
+	-----------------------------------------------------------------------
+	-- Test case 3: Switch synchronization
+	-----------------------------------------------------------------------
+		sw_i(3 downto 0) <= "1010";
+		wait_n_clocks(clk_i, 10);
+		sw_i(3 downto 0) <= "0101";
+		wait_n_clocks(clk_i, 10);
+		sw_i(3 downto 0) <= "1111";
+		wait_n_clocks(clk_i, 2_000);
 
-        -----------------------------------------------------------------------
-        -- Test case 4: Push-button synchronization
-        -----------------------------------------------------------------------
-        pb_i <= "0001";
-        wait for 100 ns;
-        pb_i <= "0010";
-        wait for 100 ns;
-        pb_i <= "0100";
-        wait for 100 ns;
-        pb_i <= "1000";
-        wait for 2 ms;
+	-----------------------------------------------------------------------
+	-- Test case 4: Push-button synchronization
+	-----------------------------------------------------------------------
+		pb_i <= "0001";
+		wait_n_clocks(clk_i, 10);
+		pb_i <= "0010";
+		wait_n_clocks(clk_i, 10);
+		pb_i <= "0100";
+		wait_n_clocks(clk_i, 10);
+		pb_i <= "1000";
+		wait_n_clocks(clk_i, 2_000);
 
-        -----------------------------------------------------------------------
-        -- Test case 5: LED forwarding
-        -----------------------------------------------------------------------
-        led_i <= x"AAAA";
-        wait for 1 ms;
-        led_i <= x"5555";
-        wait for 1 ms;
+	-----------------------------------------------------------------------
+	-- Test case 5: LED forwarding
+	-----------------------------------------------------------------------
+		led_i <= x"AAAA";
+		wait_n_clocks(clk_i, 1_000);
+		led_i <= x"5555";
+		wait_n_clocks(clk_i, 1_000);
 
-        -----------------------------------------------------------------------
-        -- End of simulation
-        -----------------------------------------------------------------------
-        wait;
-    end process p_stim;
+	----------------------------------------------------------------------
+	-- End of simulation
+	-----------------------------------------------------------------------
+	assert false report "tb_io_ctrl SIM complete"severity failure;
+	end process p_stim;
 
 end architecture sim;
