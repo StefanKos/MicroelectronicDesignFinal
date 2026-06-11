@@ -16,7 +16,6 @@
 --	The signals cntr0_i, cntr1_i, cntr2_i and cntr3_i are connected to the io_ctrl sub-unit which controls the
 --	7-segment display.
 
-
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -41,10 +40,10 @@ end entity cntr;
 architecture rtl of cntr is
 	
 	-- Frequenz Teiler 1kHz auf 100MHz -> 100_000
-	--constant CLK_DIV_MAX : unsigned(27 downto 0) := to_unsigned(199_999_999, 28);
+	constant CLK_DIV_MAX : unsigned(27 downto 0) := to_unsigned(199_999_999, 28);
 	
 	-- Für die Testbench
-	constant CLK_DIV_MAX : unsigned(27 downto 0) := to_unsigned(199, 28);
+	-- constant CLK_DIV_MAX : unsigned(27 downto 0) := to_unsigned(199, 28);
 	
 	
 	signal div_cnt : unsigned(27 downto 0);
@@ -76,7 +75,7 @@ begin
 	
 	---------------------------------------------------------------------------
 	-- Octal counter
-	-- Priority: clear > hold > up > down > hold
+	-- Priority: reset > clear > hold > up > down > hold
 	---------------------------------------------------------------------------	
 	p_count : process(clk_i, reset_i)	
 		variable v_d0, v_d1, v_d2, v_d3 : unsigned(2 downto 0);
@@ -95,6 +94,7 @@ begin
 				v_d2 := d2;
 				v_d3 := d3;
 				
+				-- Soft Clear
 				if cntrclear_i = '1' then
 					v_d0 := (others => '0');
 					v_d1 := (others => '0');
@@ -106,6 +106,7 @@ begin
 					
 				elsif (cntrup_i = '1') and (cntrdown_i = '0') then
 					
+					-- 7777->0000
 					if v_d0 = "111" then
 						v_d0 := "000";
 						if v_d1 = "111" then
@@ -113,7 +114,7 @@ begin
 							if v_d2 = "111" then
 								v_d2 := "000";
 								if v_d3 = "111" then
-									v_d3 := "000"; -- 7777->0000
+									v_d3 := "000"; 
 								else
 									v_d3 := v_d3 + 1;
 								end if;
@@ -127,9 +128,9 @@ begin
 						v_d0 := v_d0 +1;
 					end if;
 							
-							
 				elsif (cntrup_i = '0') and (cntrdown_i = '1') then
 				
+					-- 0000->7777
 					if v_d0 = "000" then
 						v_d0 := "111";
 						if v_d1 = "000" then
@@ -137,7 +138,7 @@ begin
 							if v_d2 = "000" then
 								v_d2 := "111";
 								if v_d3 = "000" then
-									v_d3 := "111"; -- 0000->7777
+									v_d3 := "111"; 
 								else
 									v_d3 := v_d3 - 1;
 								end if;
@@ -171,4 +172,5 @@ begin
 	cntr1_o <= '0' & std_logic_vector(d1);
 	cntr2_o <= '0' & std_logic_vector(d2);
 	cntr3_o <= '0' & std_logic_vector(d3);	
+	
 end architecture rtl;

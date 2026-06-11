@@ -14,7 +14,6 @@
 --	and the second sub-unit cntr contains the implementation of the octal counter. The 7-segment decoder/multiplexer
 --	(used to control and multiplex the four 7-segment digits) is located in the io_ctrl.
 
-
 library ieee;
 use ieee.std_logic_1164.all;
 
@@ -126,5 +125,5 @@ begin
 		cntr2_o => cntr2_s,
 		cntr3_o => cntr3_s
 		);
-		
+	
 end architecture rtl;

@@ -175,6 +175,7 @@ begin
 	-- End of simulation
 	-----------------------------------------------------------------------
 	assert false report "tb_cntr SIM complete"severity failure;
+	
 end process p_stim;
 
 end architecture sim;

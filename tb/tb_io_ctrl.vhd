@@ -143,8 +143,8 @@ uut : io_ctrl
 		cntr1_i <= "0010"; -- 2
 		cntr2_i <= "0011"; -- 3
 		cntr3_i <= "0100"; -- 4
-		wait_n_clocks(clk_i, 50);     -- observe multiplexing
-
+		wait_n_clocks(clk_i, 50);     -- observe 
+     
 	-----------------------------------------------------------------------
 	-- Test case 2: Change digit values
 	-----------------------------------------------------------------------
@@ -188,6 +188,7 @@ uut : io_ctrl
 	-- End of simulation
 	-----------------------------------------------------------------------
 	assert false report "tb_io_ctrl SIM complete"severity failure;
+	
 	end process p_stim;
 
 end architecture sim;
